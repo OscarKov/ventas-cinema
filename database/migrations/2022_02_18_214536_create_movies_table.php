@@ -17,6 +17,7 @@ class CreateMoviesTable extends Migration
             $table->id();
             $table->string('title', 100);
             $table->text('synopsis');
+            $table->string('poster_url');
             $table->string('trailer_url');
             $table->boolean('available');
             $table->integer('movie_length', false, true);
