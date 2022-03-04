@@ -38,7 +38,8 @@ class CreateMovieShowsTable extends Migration
     public function down()
     {
         Schema::table('movie_shows', function (Blueprint $table) {
-            $table->dropForeign(['movie_id', 'room_id']);
+            $table->dropForeign(['movie_id']);
+            $table->dropForeign(['room_id']);
         });
         Schema::dropIfExists('movie_shows');
     }

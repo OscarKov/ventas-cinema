@@ -38,7 +38,8 @@ class CreatePurchasesTable extends Migration
     public function down()
     {
         Schema::table('purchases', function(Blueprint $table){
-            $table->dropForeign(['movie_show', 'user_id']);
+            $table->dropForeign(['movie_show']);
+            $table->dropForeign(['user_id']);
         });
 
         Schema::dropIfExists('purchases');
