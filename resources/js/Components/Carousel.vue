@@ -1,15 +1,29 @@
 <script setup>
-import { ref, computed, defineProps } from 'vue'
+import { ref, computed, defineProps, onMounted } from 'vue'
 import { Link } from '@inertiajs/inertia-vue3'
 
 const props = defineProps({
   items: Array
 })
 
+const updateInterval = 10000;
+
 const currentItemIndex = ref(0)
 
 const currentListingItem = computed(() => {
   return props.items[currentItemIndex.value]
+})
+
+const updateItemIndex = () => {
+  if (currentItemIndex.value < props.items.length - 1) {
+    currentItemIndex.value++
+  } else {
+    currentItemIndex.value = 0
+  }
+}
+
+onMounted(() => {
+  setInterval(updateItemIndex, updateInterval)
 })
 
 </script>
