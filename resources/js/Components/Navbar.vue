@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue'
+import { Inertia } from '@inertiajs/inertia'
 import { Link, usePage } from '@inertiajs/inertia-vue3'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
@@ -10,6 +11,10 @@ const navigation = [
   { name: 'Inicio', to: 'home', current: false },
   { name: 'Google', to: 'https://google.com', current: false },
 ]
+
+const logout = () => {
+  Inertia.visit(route('logout'), { method: 'post' })
+}
 
 </script>
 
@@ -85,7 +90,7 @@ const navigation = [
             v-else
           >
             <button
-              class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              class="hidden bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
               type="button"
             >
               <span class="sr-only">View notifications</span>
@@ -104,10 +109,10 @@ const navigation = [
                 <MenuButton
                   class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 >
-                  <span class="sr-only">Open user menu</span>
+                  <p class="text-white">{{ userInfo.first_name }}</p>
                   <img
                     alt
-                    class="h-8 w-8 rounded-full"
+                    class="hidden h-8 w-8 rounded-full"
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   />
                 </MenuButton>
@@ -124,22 +129,16 @@ const navigation = [
                   class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
                   <MenuItem v-slot="{ active }">
-                    <a
+                    <Link
                       :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                      href="#"
-                    >Your Profile</a>
+                      :href="route('dashboard')"
+                    >Panel</Link>
                   </MenuItem>
                   <MenuItem v-slot="{ active }">
-                    <a
+                    <Link
                       :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                      href="#"
-                    >Settings</a>
-                  </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                    <a
-                      :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                      href="#"
-                    >Sign out</a>
+                      @click="logout"
+                    >Cerrar Sesión</Link>
                   </MenuItem>
                 </MenuItems>
               </transition>
