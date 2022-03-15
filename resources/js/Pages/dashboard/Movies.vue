@@ -1,34 +1,20 @@
 <script setup>
-import { defineProps } from 'vue'
-import { Head } from '@inertiajs/inertia-vue3'
+import { ref, defineProps } from 'vue'
+import { Link, Head } from '@inertiajs/inertia-vue3'
+
 import MainLayout from '@/Layouts/Main.vue'
+import BreezeButton from '@/Components/Button.vue'
+
 
 const title = 'Peliculas'
 
 const props = defineProps({
-  //movies: Array
+  movies: Array
 })
 
-const movies = [
-  {
-    id: 0,
-    title: 'Spiderman Sin camino a casa',
-    poster_url: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/miZFgV81xG324rpUknQX8dtXuBl.jpg',
-    synopsis: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo dignissimos voluptates ipsa nisi quasi, iure praesentium commodi omnis minima minus. Unde quas vero nam aliquid officia temporibus explicabo modi dolorum!',
-    trailer_url: 'https://www.youtube.com/watch?v=r6t0czGbuGI',
-    available: 1,
-    movie_length: 140
-  },
-  {
-    id: 1,
-    title: 'The Batman',
-    poster_url: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/pOaKyhMwALpCTg07eQQu0SQCbL9.jpg',
-    synopsis: 'Cuando un asesino se dirige a la élite de Gotham con una serie de maquinaciones sádicas, un rastro de pistas crípticas envía Batman a una investigación en los bajos fondos. A medida que las pruebas comienzan a acercarse a su casa y se hace evidente la magnitud de los planes del autor, Batman debe forjar nuevas relaciones, desenmascarar al culpable y hacer justicia al abuso de poder y la corrupción que durante mucho tiempo han asolado Gotham City.',
-    trailer_url: 'https://youtu.be/L6DEcPaNdLs',
-    available: 1,
-    movie_length: 160
-  }
-]
+const deleteMovie = () => {
+
+}
 
 </script>
 
@@ -38,6 +24,11 @@ const movies = [
     <section class="py-12">
       <div class="p-5">
         <h1 class="text-2xl pb-5">Peliculas</h1>
+        <div>
+          <Link :href=" route('dashboard.movies') + '/add' ">
+            <BreezeButton class="ml-4">Agregar Película</BreezeButton>
+          </Link>
+        </div>
       </div>
       <div class="overflow-x-auto">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -64,6 +55,9 @@ const movies = [
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
+                <tr v-if="movies.length == 0">
+                  <p class="text-lg text-center">Aún no hay peliculas.</p>
+                </tr>
                 <tr
                   :key="movie.id"
                   v-for="movie in movies"
@@ -90,12 +84,23 @@ const movies = [
                       class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                       v-if="movie.available == 1"
                     >Disponible</span>
+                    <span
+                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800"
+                      v-else
+                    >No Disponible</span>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a
-                      class="text-indigo-600 hover:text-indigo-900"
-                      href="#"
-                    >Edit</a>
+                  <td class="px-2 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <div>
+                      <Link
+                        :href="`${route('dashboard.movies')}/edit/${movie.id}`"
+                        class="text-indigo-600 hover:text-indigo-900"
+                      >Editar</Link>|
+                      <a
+                        @click="deleteMovie(movie.id)"
+                        class="text-red-600 hover:text-indigo-900"
+                        href="#"
+                      >Eliminar</a>
+                    </div>
                   </td>
                 </tr>
               </tbody>

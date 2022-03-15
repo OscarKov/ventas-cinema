@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movie;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,7 +15,10 @@ class MoviesController extends Controller
      */
     public function index()
     {
-        return Inertia::render('dashboard/Movies');
+        $movies = Movie::all();
+        return Inertia::render('dashboard/Movies', [
+            'movies' => $movies
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class MoviesController extends Controller
      */
     public function create()
     {
-
+        return Inertia::render('dashboard/AddMovie');
     }
 
     /**
@@ -35,7 +39,27 @@ class MoviesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'synopsis' => 'required|string',
+            'poster_url' => 'required|string|max:255',
+            'trailer_url' => 'required|string|max:255',
+            'available' => 'required',
+            'movie_length' => 'required'
+        ]);
+
+        $movie = new Movie([
+            'title' => $request->title,
+            'synopsis' => $request->synopsis,
+            'poster_url' => $request->poster_url,
+            'trailer_url' => $request->trailer_url,
+            'available' => $request->available,
+            'movie_length' => $request->movie_length
+        ]);
+
+        $movie->save();
+
+        return redirect('/dashboard/movies');
     }
 
     /**
@@ -57,7 +81,10 @@ class MoviesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $movie = Movie::findOrFail($id);
+        return Inertia::render('dashboard/EditMovie', [
+            'movie' => $movie
+        ]);
     }
 
     /**
@@ -69,7 +96,25 @@ class MoviesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'synopsis' => 'required|string',
+            'poster_url' => 'required|string|max:255',
+            'trailer_url' => 'required|string|max:255',
+            'available' => 'required',
+            'movie_length' => 'required'
+        ]);
+
+        $movie = Movie::find($id);
+        $movie->update([
+            'title' => $request->title,
+            'synopsis' => $request->synopsis,
+            'poster_url' => $request->poster_url,
+            'trailer_url' => $request->trailer_url,
+            'available' => $request->available,
+            'movie_length' => $request->movie_length
+        ]);
+        return redirect('/dashboard/movies');
     }
 
     /**

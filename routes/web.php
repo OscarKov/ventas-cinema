@@ -25,7 +25,11 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/movies', [MoviesController::class, 'index']);
+    Route::get('/movies', [MoviesController::class, 'index'])->name('dashboard.movies');
+    Route::get('/movies/add', [MoviesController::class, 'create']);
+    Route::post('/movies/add', [MoviesController::class, 'store']);
+    Route::get('/movies/edit/{id}', [MoviesController::class, 'edit']);
+    Route::post('/movies/edit/{id}', [MoviesController::class, 'update']);
 });
 
 require __DIR__ . '/auth.php';
