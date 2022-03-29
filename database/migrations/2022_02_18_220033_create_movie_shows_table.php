@@ -17,6 +17,8 @@ class CreateMovieShowsTable extends Migration
             $table->id();
             $table->dateTime('starts_at');
             $table->boolean('available');
+            $table->smallInteger('tickets_sold', false, true)->default(0);
+            $table->double('price', 12, 2)->default(0);
 
             $table->foreignId('movie_id')
                 ->constrained()

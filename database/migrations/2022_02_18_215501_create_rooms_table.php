@@ -18,7 +18,6 @@ class CreateRoomsTable extends Migration
             $table->boolean('available');
             $table->text('description');
             $table->smallInteger('max_quota', false, true);
-            $table->smallInteger('current_quota', false, true);
         });
     }
 

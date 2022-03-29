@@ -15,9 +15,8 @@ class CreatePurchasesTable extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->string('100');
-            $table->dateTime('date');
-            $table->integer('price', false, true);
+            $table->text('detail')->nullable();
+            $table->double('price', 16, 2)->default(0);
             $table->smallInteger('seat', false, true);
 
             $table->foreignId('user_id')
@@ -37,7 +36,7 @@ class CreatePurchasesTable extends Migration
      */
     public function down()
     {
-        Schema::table('purchases', function(Blueprint $table){
+        Schema::table('purchases', function (Blueprint $table) {
             $table->dropForeign(['movie_show']);
             $table->dropForeign(['user_id']);
         });
