@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\MoviesController;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,5 +32,12 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     Route::get('/movies/edit/{id}', [MoviesController::class, 'edit']);
     Route::post('/movies/edit/{id}', [MoviesController::class, 'update']);
 });
+
+Route::get('/listing/{movie_id}', [ListingController::class, 'getMovieListing'])
+    ->name('movieListing');
+
+Route::post('/purchase', [PurchaseController::class, 'purchase'])
+    ->name('purchase')
+    ->middleware('auth');
 
 require __DIR__ . '/auth.php';

@@ -54,7 +54,7 @@ onMounted(() => {
                   />
                 </div>
                 <Link
-                  :href="route('register')"
+                  :href="route('movieListing', [currentListingItem.id])"
                   class="mt-4 mx-auto whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                 >Horarios y entradas</Link>
               </div>

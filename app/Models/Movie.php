@@ -17,4 +17,11 @@ class Movie extends Model
         'available',
         'movie_length'
     ];
+
+    protected $hidden = ['shows'];
+
+    public function shows()
+    {
+        return $this->hasMany(MovieShow::class);
+    }
 }
