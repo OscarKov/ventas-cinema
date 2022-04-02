@@ -123,8 +123,13 @@ class MoviesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $request->validate([
+            'movie_id' => 'required|numeric'
+        ]);
+        $movie = Movie::findOrFail($request->movie_id);
+        $movie->delete();
+        return redirect()->route('dashboard.movies');
     }
 }

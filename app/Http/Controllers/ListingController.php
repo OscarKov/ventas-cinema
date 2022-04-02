@@ -11,7 +11,7 @@ class ListingController extends Controller
 {
     public function index()
     {
-        $listing_items = Movie::all();
+        $listing_items = Movie::where('available', 1)->get();
         return Inertia::render('Home', [
             'listingItems' => $listing_items
         ]);

@@ -1,5 +1,6 @@
 <script setup>
 import { ref, defineProps } from 'vue'
+import { Inertia } from '@inertiajs/inertia'
 import { Link, Head } from '@inertiajs/inertia-vue3'
 
 import MainLayout from '@/Layouts/Main.vue'
@@ -12,8 +13,16 @@ const props = defineProps({
   movies: Array
 })
 
-const deleteMovie = () => {
+const isAvailable = (movie) => {
+  return movie.available == 1
+}
 
+const deleteMovie = (movieId) => {
+  Inertia.delete(route('movie.delete'), {
+    data: {
+      movie_id: movieId
+    }
+  })
 }
 
 </script>
@@ -96,9 +105,8 @@ const deleteMovie = () => {
                         class="text-indigo-600 hover:text-indigo-900"
                       >Editar</Link>|
                       <a
-                        @click="deleteMovie(movie.id)"
+                        @click.capture="deleteMovie(movie.id)"
                         class="text-red-600 hover:text-indigo-900"
-                        href="#"
                       >Eliminar</a>
                     </div>
                   </td>

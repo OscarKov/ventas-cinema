@@ -29,6 +29,8 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     Route::post('/movies/add', [MoviesController::class, 'store']);
     Route::get('/movies/edit/{id}', [MoviesController::class, 'edit']);
     Route::post('/movies/edit/{id}', [MoviesController::class, 'update']);
+    Route::delete('/movies/delete', [MoviesController::class, 'destroy'])
+        ->name('movie.delete');
 });
 
 Route::get('/', [ListingController::class, 'index'])->name('home');

@@ -41,7 +41,7 @@ onMounted(() => {
   movieForm.synopsis = props.movie.synopsis
   movieForm.poster_url = props.movie.poster_url
   movieForm.trailer_url = props.movie.trailer_url
-  movieForm.available = props.movie.available
+  movieForm.available = props.movie.available == 1
   movieForm.movie_length = props.movie.movie_length
 })
 
@@ -143,7 +143,6 @@ onMounted(() => {
                     <BreezeCheckbox
                       name="remember"
                       v-model:checked="movieForm.available"
-                      value="1"
                     />
                     <span class="ml-2 text-sm text-gray-600">Disponible</span>
                   </label>
