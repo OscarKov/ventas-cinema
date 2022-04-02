@@ -35,10 +35,16 @@ export default {
       })
     }
   },
-
   methods: {
+    checkRedirect () {
+      const urlQuery = new URLSearchParams(location.search)
+      return urlQuery.get('redirect')
+    },
     submit () {
-      this.form.post(this.route('login'), {
+      this.form.transform((data) => ({
+        ...data,
+        redirect: this.checkRedirect()
+      })).post(this.route('login'), {
         onFinish: () => this.form.reset('password'),
       })
     }
