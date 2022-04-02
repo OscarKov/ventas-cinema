@@ -19,8 +19,6 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
 Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', function () {
         return Inertia::render('Dashboard');
@@ -33,6 +31,7 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     Route::post('/movies/edit/{id}', [MoviesController::class, 'update']);
 });
 
+Route::get('/', [ListingController::class, 'index'])->name('home');
 Route::get('/listing/{movie_id}', [ListingController::class, 'getMovieListing'])
     ->name('movieListing');
 
