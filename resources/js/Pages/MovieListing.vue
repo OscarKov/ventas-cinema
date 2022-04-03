@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onUpdated } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
-import { Head, Link, usePage } from '@inertiajs/inertia-vue3'
+import { Head, usePage } from '@inertiajs/inertia-vue3'
 import {
   TransitionRoot,
   TransitionChild,
@@ -85,6 +85,11 @@ const onPurchase = (show) => {
           <div class="flex flex-wrap justify-center">
             <h1 class="w-full text-2xl font-bold">{{ movie.title }}</h1>
             <p class="w-full">{{ movie.synopsis }}</p>
+            <a
+            target="_blank"
+              :href="movie.trailer_url"
+              class="text-indigo-600 hover:text-indigo-900"
+            >Ver trailer</a>
             <div
               class="mt-6 w-full"
               v-if="shows.length > 0"
