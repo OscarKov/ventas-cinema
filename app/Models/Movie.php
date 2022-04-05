@@ -18,7 +18,7 @@ class Movie extends Model
         'movie_length'
     ];
 
-    protected $hidden = ['shows'];
+    //protected $hidden = ['shows'];
 
     public function shows()
     {

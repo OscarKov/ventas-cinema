@@ -11,7 +11,10 @@ class MovieShow extends Model
 
     protected $fillable = [
         'starts_at',
-        'available'
+        'movie_id',
+        'room_id',
+        'available',
+        'price'
     ];
 
     protected $hidden = [
@@ -21,7 +24,7 @@ class MovieShow extends Model
         'room_id'
     ];
 
-    protected $with = ['room'];
+    protected $with = ['movie', 'room'];
 
     protected $appends = ['sold_seats'];
 

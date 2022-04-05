@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\MovieShow;
+use App\Models\Room;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -131,5 +134,81 @@ class MoviesController extends Controller
         $movie = Movie::findOrFail($request->movie_id);
         $movie->delete();
         return redirect()->route('dashboard.movies');
+    }
+
+    public function getMovieShows($movie_id)
+    {
+        $movie = Movie::with(['shows'])->findOrFail($movie_id, ['id', 'title']);
+        return Inertia::render('dashboard/MovieShows', [
+            'movie' => $movie
+        ]);
+    }
+
+    public function getAddShow()
+    {
+        $movies = Movie::all(['id', 'title']);
+        $rooms = Room::all();
+        return Inertia::render('dashboard/AddShow', [
+            'movies' => $movies,
+            'rooms' => $rooms
+        ]);
+    }
+
+    public function postAddShow(Request $request)
+    {
+        $request->validate([
+            'movie_id' => 'required|numeric',
+            'room_id' => 'required|numeric',
+            'starts_at' => 'required|date',
+            'price' => 'required|numeric',
+            'available' => 'required|boolean'
+        ]);
+
+        MovieShow::create([
+            'movie_id' => $request->movie_id,
+            'room_id' => $request->room_id,
+            'starts_at' => $request->starts_at,
+            'price' => $request->price,
+            'available' => $request->available
+        ]);
+
+        return redirect()->route('movie.shows', [
+            'id' => $request->movie_id
+        ]);
+    }
+
+    public function getEditShow($show_id)
+    {
+        $show = MovieShow::findOrFail($show_id);
+        $movies = Movie::all(['id', 'title']);
+        $rooms = Room::all();
+        return Inertia::render('dashboard/EditShow', [
+            'show' => $show,
+            'movies' => $movies,
+            'rooms' => $rooms
+        ]);
+    }
+
+    public function postEditShow(Request $request, $id)
+    {
+        $request->validate([
+            'movie_id' => 'required|numeric',
+            'room_id' => 'required|numeric',
+            'starts_at' => 'required|date',
+            'price' => 'required|numeric',
+            'available' => 'required|boolean'
+        ]);
+
+        $show = MovieShow::findOrFail($id);
+        $show->update([
+            'movie_id' => $request->movie_id,
+            'room_id' => $request->room_id,
+            'starts_at' => $request->starts_at,
+            'price' => $request->price,
+            'available' => $request->available
+        ]);
+        return redirect()->route('movie.shows', [
+            'id' => $request->movie_id
+        ]);
     }
 }

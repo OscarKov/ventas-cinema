@@ -31,6 +31,12 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     Route::post('/movies/edit/{id}', [MoviesController::class, 'update']);
     Route::delete('/movies/delete', [MoviesController::class, 'destroy'])
         ->name('movie.delete');
+
+    Route::get('/movies/{id}/shows', [MoviesController::class, 'getMovieShows'])->name('movie.shows');
+    Route::get('/show/add', [MoviesController::class, 'getAddShow'])->name('shows.add');
+    Route::post('/show/add', [MoviesController::class, 'postAddShow']);
+    Route::get('/show/edit/{id}', [MoviesController::class, 'getEditShow'])->name('shows.edit');
+    Route::post('/show/edit/{id}', [MoviesController::class, 'postEditShow']);
 });
 
 Route::get('/', [ListingController::class, 'index'])->name('home');
