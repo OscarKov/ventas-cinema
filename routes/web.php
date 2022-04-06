@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\PurchaseController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -32,10 +30,13 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     Route::delete('/movies/delete', [MoviesController::class, 'destroy'])
         ->name('movie.delete');
 
-    Route::get('/movies/{id}/shows', [MoviesController::class, 'getMovieShows'])->name('movie.shows');
-    Route::get('/show/add', [MoviesController::class, 'getAddShow'])->name('shows.add');
+    Route::get('/movies/{id}/shows', [MoviesController::class, 'getMovieShows'])
+        ->name('movie.shows');
+    Route::get('/show/add', [MoviesController::class, 'getAddShow'])
+        ->name('shows.add');
     Route::post('/show/add', [MoviesController::class, 'postAddShow']);
-    Route::get('/show/edit/{id}', [MoviesController::class, 'getEditShow'])->name('shows.edit');
+    Route::get('/show/edit/{id}', [MoviesController::class, 'getEditShow'])
+        ->name('shows.edit');
     Route::post('/show/edit/{id}', [MoviesController::class, 'postEditShow']);
 });
 
