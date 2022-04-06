@@ -191,17 +191,16 @@ class MoviesController extends Controller
 
     public function postEditShow(Request $request, $id)
     {
+        $show = MovieShow::findOrFail($id);
+
         $request->validate([
-            'movie_id' => 'required|numeric',
             'room_id' => 'required|numeric',
             'starts_at' => 'required|date',
             'price' => 'required|numeric',
             'available' => 'required|boolean'
         ]);
 
-        $show = MovieShow::findOrFail($id);
         $show->update([
-            'movie_id' => $request->movie_id,
             'room_id' => $request->room_id,
             'starts_at' => $request->starts_at,
             'price' => $request->price,
