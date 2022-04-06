@@ -29,5 +29,4 @@ Route::prefix('v1')->group(function () {
     Route::get('/movies/{id}/shows', [APIMoviesController::class, 'getMovieShows']);
     Route::post('/show/add', [APIMoviesController::class, 'postAddShow']);
     Route::put('/show/edit/{id}', [APIMoviesController::class, 'putEditShow']);
-    Route::delete('/show/delete/{id}', [APIMoviesController::class, 'deleteShow']);
 });
